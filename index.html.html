@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>임혜진 | 네트워크·인프라 포트폴리오</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 넥슨 고딕 웹폰트 적용 -->
+<link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NexonLv2Gothic.woff" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'NexonLv2Gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NexonLv2Gothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  :root {
+    --deep-green: #142D24;
+    --forest-green: #1F4B3B;
+    --sage: #8FB89C;
+    --cream: #DED8CC; 
+    --ink: #1B221B;
+    --ink-soft: #444941;
+    --line: rgba(20,45,36,0.22);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--cream);
+    background-image: 
+      linear-gradient(90deg, rgba(31, 75, 59, 0.1) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(31, 75, 59, 0.1) 1px, transparent 1px);
+    background-size: 48px 48px;
+    color: var(--ink);
+    font-family: 'NexonLv2Gothic', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3 { font-family: 'NexonLv2Gothic', sans-serif; font-weight: 700; }
+  a { text-decoration: none; color: inherit; }
+
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--forest-green);
+    outline-offset: 2px;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 10;
+    background: rgba(222, 216, 204, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 900px; margin: 0 auto; height: 60px;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 24px;
+  }
+  .logo { font-weight: 700; color: var(--deep-green); }
+  .nav-links { display: flex; gap: 20px; font-size: 0.9rem; color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--deep-green); }
+
+  /* Hero Section */
+  .hero {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 30% 20%, var(--forest-green), var(--deep-green) 70%);
+    color: var(--cream);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 100px 24px 60px; position: relative;
+  }
+
+  .hero small { color: var(--sage); font-size: 0.95rem; letter-spacing: 0.15em; margin-bottom: 18px; display: block; font-weight: 700; }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); margin-bottom: 22px; line-height: 1.25; }
+  .hero p { font-size: 1.15rem; color: #D5E2D8; max-width: 620px; margin: 0 auto 32px; line-height: 1.7; }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 40px; }
+  .hero-badge {
+    padding: 7px 16px; border-radius: 999px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
+    font-size: 0.9rem; color: var(--cream);
+  }
+
+  .hero-more-btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: #D5E2D8;
+    font-size: 0.95rem;
+    font-family: 'NexonLv2Gothic', sans-serif;
+    transition: color 0.2s, transform 0.2s;
+    opacity: 0.9;
+  }
+  .hero-more-btn:hover {
+    color: var(--cream);
+    transform: translateY(3px);
+  }
+  .hero-more-btn svg {
+    width: 20px;
+    height: 20px;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(5px); }
+    60% { transform: translateY(3px); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  section { padding: 60px 24px; max-width: 800px; margin: 0 auto; }
+  .section-label { font-size: 0.85rem; color: var(--forest-green); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; font-weight: 700; }
+  .section-title { font-size: clamp(1.4rem, 2.5vw, 1.8rem); color: var(--deep-green); margin-bottom: 28px; }
+
+  /* Cards Grid */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card {
+    background: rgba(222, 216, 204, 0.75); 
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--line); 
+    border-radius: 16px; 
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(20,45,36,0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    background: rgba(222, 216, 204, 0.9);
+    box-shadow: 0 8px 20px rgba(20,45,36,0.08);
+  }
+  
+  .card-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--forest-green);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-family: 'NexonLv2Gothic', sans-serif;
+  }
+
+  .card h3 { font-size: 1rem; color: var(--deep-green); margin-bottom: 6px; }
+  .card p { font-size: 0.88rem; color: var(--ink-soft); }
+
+  /* 공개 범위 점검표 스타일 */
+  .privacy-box {
+    padding: 8px 0;
+  }
+  .privacy-box h3 { font-size: 1.15rem; color: var(--deep-green); margin-bottom: 4px; }
+  .privacy-desc { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 12px; }
+  
+  .privacy-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  }
+  .privacy-content.show {
+    max-height: 350px;
+    opacity: 1;
+    margin-top: 14px;
+  }
+
+  .privacy-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
+    background: rgba(31, 75, 59, 0.05);
+    border-left: 3.5px solid var(--forest-green);
+    border-radius: 0 10px 10px 0;
+    padding: 20px;
+  }
+  .privacy-col h4 { font-size: 0.92rem; color: var(--deep-green); margin-bottom: 8px; font-weight: 700; }
+  .privacy-col ul { list-style: disc; padding-left: 18px; font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5; }
+  .privacy-col li { margin-bottom: 6px; }
+
+  /* 타임라인 디자인 */
+  .timeline { 
+    border-left: 2.5px solid var(--forest-green); 
+    padding-left: 24px; 
+    margin-left: 8px; 
+  }
+  .t-item { 
+    position: relative; 
+    margin-bottom: 36px; 
+  }
+  .t-item:last-child { margin-bottom: 0; }
+  .t-dot {
+    position: absolute; left: -31.25px; top: 4px; width: 12px; height: 12px;
+    border-radius: 50%; background: var(--cream); border: 2.5px solid var(--forest-green);
+    box-shadow: 0 0 0 3px var(--cream);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  .t-item:hover .t-dot {
+    transform: scale(1.2);
+    background: var(--sage);
+  }
+  .t-period { 
+    display: inline-block;
+    font-size: 0.8rem; 
+    color: var(--forest-green); 
+    margin-bottom: 2px; 
+    font-weight: 700; 
+    letter-spacing: 0.05em;
+  }
+  .t-title { font-size: 1.1rem; font-weight: 700; color: var(--deep-green); margin-bottom: 4px; }
+  .t-desc { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.5; }
+
+  /* 상세 스토리 내부 텍스트 굵기 조정 (normal) */
+  .more-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
+    background: rgba(31, 75, 59, 0.05);
+    border-left: 3px solid var(--forest-green);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    font-weight: normal;
+  }
+  .more-content.show {
+    max-height: 280px;
+    opacity: 1;
+    margin-top: 10px;
+    padding: 12px 14px;
+    line-height: 1.6;
+  }
+  .more-content strong {
+    color: var(--deep-green);
+    font-weight: 600;
+  }
+
+  .toggle-btn {
+    display: inline-block;
+    margin-top: 8px;
+    background: none;
+    border: none;
+    color: var(--forest-green);
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'NexonLv2Gothic', sans-serif;
+    padding: 0;
+    transition: color 0.2s;
+  }
+  .toggle-btn:hover {
+    color: var(--deep-green);
+    text-decoration: underline;
+  }
+
+  /* Goal Section */
+  .goal {
+    background: var(--deep-green); color: white; border-radius: 20px; padding: 40px 28px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .goal .section-label { color: var(--sage); }
+  .goal h2 { color: white; margin-bottom: 12px; font-size: 1.5rem; }
+  .goal p { color: #D5E2D8; max-width: 480px; margin: 0 auto 24px; font-size: 0.95rem; }
+  .goal-contact {
+    display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  }
+  .goal-btn {
+    padding: 8px 18px; border-radius: 999px; background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 0.88rem;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .goal-btn:hover { 
+    background: rgba(255,255,255,0.25); 
+    transform: translateY(-2px);
+  }
+
+  footer { text-align: center; padding: 24px; font-size: 0.8rem; color: var(--ink-soft); border-top: 1px solid var(--line); }
+
+  @media(max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .privacy-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">LIM HYE JIN</div>
+    <div class="nav-links">
+      <a href="#about">Strengths</a>
+      <a href="#journey">Journey</a>
+      <a href="#privacy">Scope</a>
+      <a href="#goal">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <small>NETWORK & INFRASTRUCTURE</small>
+  <h1>안정적인 통신 환경을 구축하는<br>임혜진입니다</h1>
+  <p>이 페이지는 네트워크·인프라 엔지니어로 도약하는 임혜진의 전문성과 성장 과정을 채용 담당자에게 투명하게 소개하기 위한 포트폴리오입니다.</p>
+  <div class="hero-badges">
+    <span class="hero-badge">SKT ALEPH 아카데미 참여 중</span>
+    <span class="hero-badge">대학병원 임상시험 연구보조 경험</span>
+    <span class="hero-badge">CCNA 준비 중</span>
+  </div>
+  
+  <a href="#about" class="hero-more-btn" aria-label="핵심 역량 섹션으로 이동">
+    <span>더보기</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </a>
+</header>
+
+<main>
+  <section id="about" class="reveal">
+    <div class="section-label">01 · Strengths</div>
+    <h2 class="section-title">핵심 역량</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-badge">01</div>
+        <h3>꾸준함</h3>
+        <p>낯선 IT 분야로 전향하며 매일 학습을 지속하여 이론과 실무 기초를 탄탄히 다졌습니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-badge">02</div>
+        <h3>책임감</h3>
+        <p>임상시험 현장 중 발생한 돌발 변수에도 끝까지 모니터링하여 침착하고 완벽하게 대응했습니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-badge">03</div>
+        <h3>꼼꼼함</h3>
+        <p>세밀한 일정 관리와 체크리스트 활용으로 복잡한 변수를 통제해 설정 오류를 사전 예방합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="journey" class="reveal">
+    <div class="section-label">02 · Journey</div>
+    <h2 class="section-title">걸어온 길</h2>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-period">전공 선택</div>
+        <h3 class="t-title">작업치료과 입학</h3>
+        <div class="t-desc">
+          취업 진로 고민 속에서 보건 계열로 방향을 전환하고 진학 결정
+          <div id="major-more" class="more-content">
+            <strong>[S]</strong> 회계학과 진학을 준비하다 서류 전형에서 아쉬운 결과를 마주한 후 진로를 재정비해야 했습니다.<br>
+            <strong>[A]</strong> 보건 계열로 눈을 돌려 임상병리과와 작업치료과 중 취업 전망이 탄탄한 작업치료과를 선택하였고, 3년 동안 성실히 학업에 매진했습니다.<br>
+            <strong>[R]</strong> 국가고시를 최종 통과하여 작업치료사 면허증을 취득하며 목표를 완수해냈습니다.
+          </div>
+          <div>
+            <button class="toggle-btn" onclick="toggleMore('major-more', this)" aria-expanded="false" aria-controls="major-more">+ 상세 스토리 보기</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-period">졸업 후</div>
+        <h3 class="t-title">대학병원 연구보조 및 사무 직무 근무</h3>
+        <div class="t-desc">
+          연구보조 퇴사 후 일반 사무직 근무 및 새로운 도전을 위한 고민
+          <div id="hospital-more" class="more-content">
+            <strong>[S]</strong> 대학병원 임상시험 연구보조원으로 근무하며 다수 환자와 의료진의 일정을 조율해야 했습니다.<br>
+            <strong>[A]</strong> 환자 모집, 스크리닝, 평가 보조 및 스케줄 관리를 철저히 수행했습니다. 특히 환자 상태 악화 등 돌발 변수가 발생했을 때도 끝까지 면밀히 모니터링했습니다.<br>
+            <strong>[R]</strong> 이후 일반 사무직도 경험했으나 장기적 비전을 위해 IT/네트워크 분야로의 새로운 도전을 결심하는 계기를 마련했습니다.
+          </div>
+          <div>
+            <button class="toggle-btn" onclick="toggleMore('hospital-more', this)" aria-expanded="false" aria-controls="hospital-more">+ 상세 스토리 보기</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-period">현재 과정</div>
+        <h3 class="t-title">SKT ALEPH 아카데미 참여 중</h3>
+        <div class="t-desc">
+          AI 트렌드 속에서 새로운 가능성을 발견하고 네트워크 인프라 학습에 몰입
+          <div id="skt-more" class="more-content">
+            <strong>[S]</strong> AI가 대세인 트렌드 속에서 장기적인 비전과 전문성을 갖춘 IT 인프라 직무를 탐색하게 되었습니다.<br>
+            <strong>[A]</strong> 관련 분야를 적극적으로 알아보던 중 SKT ALEPH 아카데미를 알게 되어 합류하였고, 라우팅과 스위칭 등 통신 인프라 핵심 기술을 집중 학습하고 있습니다.<br>
+            <strong>[R]</strong> 매일 꾸준한 실습과 복습을 거듭하며 신뢰할 수 있는 네트워크 인프라 엔지니어로 성장하고 있습니다.
+          </div>
+          <div>
+            <button class="toggle-btn" onclick="toggleMore('skt-more', this)" aria-expanded="false" aria-controls="skt-more">+ 상세 스토리 보기</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-period">목표</div>
+        <h3 class="t-title">네트워크·인프라 전문가 도약</h3>
+        <div class="t-desc">실무 실습 및 자격증 취득을 통해 탄탄한 인프라 환경 구축</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 공개 범위 점검표 -->
+  <section id="privacy" class="reveal">
+    <div class="section-label">03 · Scope</div>
+    <h2 class="section-title">공개 범위 점검표</h2>
+    <div class="privacy-box">
+      <h3>🔒 Public & Private Scope</h3>
+      <p class="privacy-desc">본 포트폴리오의 투명하고 안전한 정보 공개 기준을 확인하실 수 있습니다.</p>
+      
+      <div id="privacy-more" class="privacy-content">
+        <div class="privacy-grid">
+          <div class="privacy-col">
+            <h4>공개할 정보 (3가지 이상)</h4>
+            <ul>
+              <li>네트워크/인프라 직무 관련 학습 및 수료 과정 (SKT ALEPH)</li>
+              <li>업무 수행 시 발휘되는 핵심 역량 (꾸준함, 책임감, 꼼꼼함)</li>
+              <li>공개 가능한 공식 연락처 및 GitHub 저장소 주소</li>
+            </ul>
+          </div>
+          <div class="privacy-col">
+            <h4>공개하지 않을 정보 (3가지 이상)</h4>
+            <ul>
+              <li>주민등록번호 및 상세 실거주지 주소 등 민감 개인정보</li>
+              <li>구체적인 사생활 및 대외비 성격의 내부 직무 문서</li>
+              <li>비공개 사내 시스템 접속 계정 및 인증 토큰 정보</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button class="toggle-btn" onclick="toggleMore('privacy-more', this)" aria-expanded="false" aria-controls="privacy-more">+ 공개 범위 점검표 보기</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="goal" class="reveal">
+    <div class="goal">
+      <div class="section-label">04 · Connect</div>
+      <h2>함께 성장할 준비가 되어 있습니다</h2>
+      <p>끊김 없고 안전한 네트워크 인프라를 구축하는 든든한 전문가가 되겠습니다.</p>
+      <div class="goal-contact">
+        <a href="mailto:l.hyejin0205@gmail.com" class="goal-btn">✉️ l.hyejin0205@gmail.com</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 Hyejin Lim · Network & Infrastructure</p>
+</footer>
+
+<script>
+  function toggleMore(id, btn) {
+    const content = document.getElementById(id);
+    const isExpanded = content.classList.contains('show');
+    
+    if (isExpanded) {
+      content.classList.remove('show');
+      if (id === 'privacy-more') {
+        btn.textContent = '+ 공개 범위 점검표 보기';
+      } else {
+        btn.textContent = '+ 상세 스토리 보기';
+      }
+      btn.setAttribute('aria-expanded', 'false');
+    } else {
+      content.classList.add('show');
+      btn.textContent = '- 접기';
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(reveal => {
+      observer.observe(reveal);
+    });
+  });
+</script>
+
+</body>
+</html>
